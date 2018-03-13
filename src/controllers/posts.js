@@ -9,6 +9,7 @@ function create (req, res, next) {
 }
 
 function getAll (req, res, next) {
+    console.log("in controllers")
   const limit = req.query.limit
   const data = model.getAll(limit)
   res.status(200).json({ data })

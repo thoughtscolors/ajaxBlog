@@ -1,15 +1,16 @@
 const uuid = require('uuid/v4')
 const posts = require('../../posts.json')
 
+
 function create (body) {
   const errors = []
-  const name = body.name
+  const title = body.title
   const content = body.content
   const image = body.image
 
   let response
-  if (!name) {
-    errors.push('name is required')
+  if (!title) {
+    errors.push('title is required')
     response = { errors }
   } else if (!content) {
     errors.push("no content")
@@ -18,7 +19,7 @@ function create (body) {
     errors.push("no images, needs visuals")
     response = { errors }
   } else {
-    const post = { id: uuid(), name, content, image }
+    const post = { id: uuid(), title, content, image }
     posts.push(post)
     response = post
   }
@@ -26,6 +27,7 @@ function create (body) {
 }
 
 function getAll (limit) {
+    console.log("in models");
   return limit ? posts.slice(0, limit) : posts
 }
 
@@ -41,7 +43,7 @@ function getById (id) {
 function changeDetails (id, body) {
   for (var i = 0; i < posts.length; i++) {
     if (posts[i].id === id) {
-      const name = !body.name ? posts[i].name : body.name
+      const title = !body.title ? posts[i].title : body.title
       const content = !body.content ? posts[i].content : body.content
       const image = !body.image ? posts[i].image : body.image
         return posts[i]
