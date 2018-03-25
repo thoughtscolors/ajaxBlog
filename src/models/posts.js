@@ -32,6 +32,7 @@ function getAll (limit) {
 }
 
 function getById (id) {
+  console.log(id, "id in models");
   for (var i = 0; i < posts.length; i++) {
     if (posts[i].id === id) {
       return posts[i]
@@ -41,25 +42,31 @@ function getById (id) {
 }
 
 function changeDetails (id, body) {
-  for (var i = 0; i < posts.length; i++) {
-    if (posts[i].id === id) {
-      const title = !body.title ? posts[i].title : body.title
-      const content = !body.content ? posts[i].content : body.content
-      const image = !body.image ? posts[i].image : body.image
-        return posts[i]
-      } else return {}
-  }
+  let result = {}
+  posts.find((post, index) => {
+    if (post.id === id) {
+      post.title = body.title
+      post.content = body.content
+      post.image = body.image
+      result = post
+    }
+  })
+  return result
 }
 
 function deletePost(id) {
-  for (var i = 0; i < posts.length; i++) {
-    if (posts[i].id === id) {
-      let deletedPost = posts[i]
-      posts.splice(i, 1)
-        return deletedPost
-      }
-        return {}
-  }
+  let result = {}
+  console.log(id, 'id in models deletePost');
+  posts.find((post, index) => {
+    if (post.id === id) {
+      result = post
+      console.log(result, index);
+      posts.splice(index, 1)
+      return result
+    }
+  })
+  console.log(result);
+  return result
 }
 
 
